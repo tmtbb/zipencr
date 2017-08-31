@@ -8,10 +8,10 @@
 
 
 //明文->密文
-bool PacketStream(const void *in_stream, int32 in_stream_length,
+extern "C" bool PacketStream(const void *in_stream, int32 in_stream_length,
                     void **out_stream, int32* out_stream_length);
 
 //密文->明文
-bool UnpackStream(const void *in_stream, int32 in_stream_length,
+extern "C" bool UnpackStream(const void *in_stream, int32 in_stream_length,
                     void **out_stream, int32* out_stream_length);
 #endif /* SWP_PUB_NET_PACKET_PROCESS_FUNCTION_H_ */

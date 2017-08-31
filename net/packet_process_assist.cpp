@@ -45,19 +45,28 @@ bool checksum(const char* src_data, uint16&  check_ret) {
   return ret;
 }
 
+extern "C"{
 //加密 key
-unsigned int key = 1234567890;  // NOLINT //key
+unsigned int key[5] = {1,2,3,4,5};  // NOLINT //key
 unsigned int GetKey() {
-    return key;
+    return key[0]*10000+key[1]*1000+key[2]*100+key[3]*10+0;
 }
 
 void SetKey(unsigned int k) {
-    key = k;
+    key[0] = k/10000;
+    key[1] = (k%10000)/1000;
+    key[2] = (k%1000)/100;
+    key[3] = (k%100)/10;
 }
 
 unsigned int CreateKey() {
-    key = 0 + rand() % (99999 - 0 + 1);
-    return key;
+    unsigned int randKey = 0 + rand() % (99999 - 0 + 1);
+    key[0] = randKey/10000;
+    key[1] = (randKey%10000)/1000;
+    key[2] = (randKey%1000)/100;
+    key[3] = (randKey%100)/10;
+    return key[0]*10000+key[1]*1000+key[2]*100+key[3]*10+0;
+}
 }
 
 // jiami
@@ -109,7 +118,7 @@ char* str_en_8byte(char *clearmsg, int len, int rounds, int& len1) {
     for (i = 0; i < len1; i += 8) {
         y1 = (unsigned int *)&en[i];  // NOLINT
         y2 = (unsigned int *)&en[i+4];  // NOLINT
-        encrypt(y1, y2, &key, rounds);
+        encrypt(y1, y2, key, rounds);
     }
     en[len1] = '\0';
     return en;
@@ -127,7 +136,7 @@ char* str_de_8byte(char *encryptedmsg, int len, int rounds) {
     for (i = 0; i < len; i += 8) {
         y1 = (unsigned int *)&de[i];  // NOLINT
         y2 = (unsigned int *)&de[i+4];  // NOLINT
-        decrypt(y1, y2, &key, rounds);
+        decrypt(y1, y2, key, rounds);
     }
     *(de+len) = '\0';
     return de;

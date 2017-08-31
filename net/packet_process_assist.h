@@ -8,6 +8,18 @@
 #include "zlib.h"
 #include "basictypes.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+unsigned int GetKey();
+void SetKey(unsigned int key);
+unsigned int CreateKey();
+
+#ifdef __cplusplus
+}
+#endif
+
 namespace net {
 
 typedef signed char int8_t;

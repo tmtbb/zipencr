@@ -11,7 +11,7 @@
 #include <list>
 #include <string>
 
-
+extern "C"{
 //明文->密文
 bool PacketStream(const void *in_stream, int32 in_stream_length,
                   void **out_stream, int32* out_stream_length) {
@@ -207,4 +207,4 @@ bool UnpackStream(const void *in_stream, int32 in_stream_length,
     }
     return true;
 }
-
+}
